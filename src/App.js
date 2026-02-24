@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Home from "./pages/Home";
+import Home from "./pages/Home.jsx";
 
 const AddTask = ({ addTask }) => {
   const [input, setInput] = useState("");
