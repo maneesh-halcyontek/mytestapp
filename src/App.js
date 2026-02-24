@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
-function App() {
+const Home = ({ tasks }) => (
+  <div>
+    <h1>My Tasks</h1>
+    <Link to="/add">Add New Task</Link>
+    <ul>
+      {tasks.map((t, i) => (
+        <li key={i}>{t}</li>
+      ))}
+    </ul>
+  </div>
+);
+
+const AddTask = ({ addTask }) => {
+  const [input, setInput] = useState("");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>New Task</h1>
+      <input
+        placeholder="Type a task"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      />
+      <button onClick={() => addTask(input)}>Save</button>
+      <br />
+      <Link to="/">Back to Home</Link>
     </div>
   );
-}
+};
 
-export default App;
+export default function App() {
+  const [tasks, setTasks] = useState(["Buy Milk"]);
+  const addTask = (task) => setTasks([...tasks, task]);
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home tasks={tasks} />} />
+        <Route path="/add" element={<AddTask addTask={addTask} />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}

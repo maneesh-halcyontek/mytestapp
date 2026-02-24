@@ -1,0 +1,30 @@
+name: React CI/CD Pipeline
+
+on:
+  push:
+    branches: [main] # Runs every time you push to the main branch
+  pull_request:
+    branches: [main] # Runs every time someone opens a PR
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest # The virtual OS (Linux)
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4 # Downloads your code onto the virtual machine
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18 # Use the same version as your local machine
+
+      - name: Install Dependencies
+        run: npm install # Installs everything in your package.json
+
+      - name: Run Unit Tests
+        # CI=true makes Jest run once and exit instead of staying in "watch" mode
+        run: npm test -- --watchAll=false
+
+      - name: Build Project
+        run: npm run build # Ensures the project actually compiles for production
