@@ -15,6 +15,11 @@ const Home = ({ tasks }) => (
 
 const AddTask = ({ addTask }) => {
   const [input, setInput] = useState("");
+
+  const submitTask = (input) => {
+    setInput("");
+    addTask(input);
+  };
   return (
     <div>
       <h1>New Task</h1>
@@ -23,7 +28,7 @@ const AddTask = ({ addTask }) => {
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
-      <button onClick={() => addTask(input)}>Save</button>
+      <button onClick={() => submitTask(input)}>Save</button>
       <br />
       <Link to="/">Back to Home</Link>
     </div>
